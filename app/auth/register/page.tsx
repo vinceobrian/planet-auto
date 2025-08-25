@@ -35,7 +35,7 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await fetch('/api/auth/register', {
+      const response = await fetch('/api/auth/register', { // Updated endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
