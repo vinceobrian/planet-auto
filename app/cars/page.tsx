@@ -36,14 +36,17 @@ async function getCars(filters?: CarFiltersType): Promise<Car[]> {
 export default async function CarsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+  // Await the searchParams promise
+  const params = await searchParams;
+  
   // Parse filters from URL search params
   const filters: CarFiltersType = {
-    transmission: typeof searchParams.transmission === 'string' ? searchParams.transmission : undefined,
-    fuelType: typeof searchParams.fuelType === 'string' ? searchParams.fuelType : undefined,
-    maxPrice: typeof searchParams.maxPrice === 'string' ? Number(searchParams.maxPrice) : undefined,
-    query: typeof searchParams.query === 'string' ? searchParams.query : undefined,
+    transmission: typeof params.transmission === 'string' ? params.transmission : undefined,
+    fuelType: typeof params.fuelType === 'string' ? params.fuelType : undefined,
+    maxPrice: typeof params.maxPrice === 'string' ? Number(params.maxPrice) : undefined,
+    query: typeof params.query === 'string' ? params.query : undefined,
   };
 
   const cars = await getCars(filters);
